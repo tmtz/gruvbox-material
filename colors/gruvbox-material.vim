@@ -10,7 +10,7 @@
 let s:configuration = gruvbox_material#get_configuration()
 let s:palette = gruvbox_material#get_palette(s:configuration.background, s:configuration.foreground, s:configuration.colors_override)
 let s:path = expand('<sfile>:p') " the path of this script
-let s:last_modified = 'Tue Jun 25 13:28:41 UTC 2024'
+let s:last_modified = 'Sat Jul 13 15:32:35 UTC 2024'
 let g:gruvbox_material_loaded_file_types = []
 
 if !(exists('g:colors_name') && g:colors_name ==# 'gruvbox-material' && s:configuration.better_performance)
@@ -135,8 +135,12 @@ call gruvbox_material#highlight('ModeMsg', s:palette.fg0, s:palette.none, 'bold'
 call gruvbox_material#highlight('MoreMsg', s:palette.yellow, s:palette.none, 'bold')
 call gruvbox_material#highlight('MatchParen', s:palette.none, s:palette.bg4)
 call gruvbox_material#highlight('NonText', s:palette.bg5, s:palette.none)
-call gruvbox_material#highlight('Whitespace', s:palette.bg5, s:palette.none)
-call gruvbox_material#highlight('SpecialKey', s:palette.bg5, s:palette.none)
+if has('nvim')
+  call gruvbox_material#highlight('Whitespace', s:palette.bg5, s:palette.none)
+  call gruvbox_material#highlight('SpecialKey', s:palette.orange, s:palette.none)
+else
+  call gruvbox_material#highlight('SpecialKey', s:palette.bg5, s:palette.none)
+endif
 call gruvbox_material#highlight('Pmenu', s:palette.fg1, s:palette.bg3)
 call gruvbox_material#highlight('PmenuSbar', s:palette.none, s:palette.bg3)
 if s:configuration.menu_selection_background ==# 'grey'
@@ -1442,6 +1446,7 @@ call gruvbox_material#highlight('InclineNormalNC', s:palette.grey1, s:palette.bg
 " }}}
 " echasnovski/mini.nvim {{{
 call gruvbox_material#highlight('MiniAnimateCursor', s:palette.none, s:palette.none, 'reverse,nocombine')
+call gruvbox_material#highlight('MiniFilesFile', s:palette.fg1, s:palette.none)
 if s:configuration.float_style ==# 'dim'
   call gruvbox_material#highlight('MiniFilesTitleFocused', s:palette.green, s:palette.bg_dim, 'bold')
 else
@@ -1464,6 +1469,11 @@ call gruvbox_material#highlight('MiniIndentscopePrefix', s:palette.none, s:palet
 call gruvbox_material#highlight('MiniJump2dSpot', s:palette.orange, s:palette.none, 'bold,nocombine')
 call gruvbox_material#highlight('MiniJump2dSpotAhead', s:palette.aqua, s:palette.none, 'nocombine')
 call gruvbox_material#highlight('MiniJump2dSpotUnique', s:palette.yellow, s:palette.none, 'bold,nocombine')
+if s:configuration.float_style ==# 'dim'
+  call gruvbox_material#highlight('MiniPickPrompt', s:palette.blue, s:palette.bg_dim)
+else
+  call gruvbox_material#highlight('MiniPickPrompt', s:palette.blue, s:palette.bg3)
+endif
 call gruvbox_material#highlight('MiniStarterCurrent', s:palette.none, s:palette.none, 'nocombine')
 call gruvbox_material#highlight('MiniStatuslineDevinfo', s:palette.grey2, s:palette.bg_statusline2)
 call gruvbox_material#highlight('MiniStatuslineFileinfo', s:palette.grey2, s:palette.bg_statusline2)
@@ -1518,7 +1528,6 @@ highlight! link MiniFilesBorder FloatBorder
 highlight! link MiniFilesBorderModified DiagnosticFloatingWarn
 highlight! link MiniFilesCursorLine CursorLine
 highlight! link MiniFilesDirectory Directory
-highlight! link MiniFilesFile NormalFloat
 highlight! link MiniFilesNormal NormalFloat
 highlight! link MiniFilesTitle FloatTitle
 highlight! link MiniIndentscopeSymbol Grey
@@ -1544,7 +1553,6 @@ highlight! link MiniPickMatchRanges DiagnosticFloatingHint
 highlight! link MiniPickNormal NormalFloat
 highlight! link MiniPickPreviewLine CursorLine
 highlight! link MiniPickPreviewRegion IncSearch
-highlight! link MiniPickPrompt DiagnosticFloatingInfo
 highlight! link MiniStarterFooter Orange
 highlight! link MiniStarterHeader Yellow
 highlight! link MiniStarterInactive Comment
